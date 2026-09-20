@@ -239,9 +239,12 @@ const HTML_POTSDAM = "<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n<meta char
   function resizeIframe(iframe){
     try{
       var doc = iframe.contentWindow.document;
+      var sx = window.pageXOffset || 0, sy = window.pageYOffset || 0;
       iframe.style.height = "0px";
       var h = Math.max(doc.documentElement.scrollHeight, doc.body ? doc.body.scrollHeight : 0);
       iframe.style.height = h + "px";
+      // colapsar o iframe a 0 faz o navegador prender a rolagem no topo; restaura a posição
+      if ((window.pageYOffset || 0) !== sy) window.scrollTo({left: sx, top: sy, behavior: "instant"});
     }catch(e){}
   }
 
